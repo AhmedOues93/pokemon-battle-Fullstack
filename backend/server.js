@@ -3,6 +3,8 @@ import express from "express";
 import cors from "cors";
 import mongoose from "mongoose";
 import connectDB from "./db/index.js";
+import errorHandler from "./middelwares/errorHandler.js";
+import notFound from "./middelwares/notFound.js";
 const app = express();
 const port = process.env.PORT || 3001;
 
@@ -14,6 +16,10 @@ app.use("/{*splat}", (req, _res) => {
     cause: 404,
   });
 });
+
+app.use(errorHandler);
+app.use(notFound);
+
 connectDB();
 
 const server = app.listen(port, () => {
