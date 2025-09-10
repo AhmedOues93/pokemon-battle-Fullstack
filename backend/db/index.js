@@ -1,7 +1,8 @@
 import mongoose from "mongoose";
+
 const connectDB = async () => {
   try {
-    const mongo = await mongoose.connect(process.env.MONGO_URI, {
+    const mongo = await mongoose.connect(process.env.MONGODB_URI, {
       dbName: "Pokemons",
     });
     console.log(`Pokemon-Leaderboard Verbindung: ${mongo.connection.name}`);
