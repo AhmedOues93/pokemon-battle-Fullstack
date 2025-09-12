@@ -41,10 +41,8 @@ const HomePage = () => {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    fetchPokemons();
-  }, []);
 
-  const fetchPokemons = async () => {
+     const fetchPokemons = async () => {
     try {
       const response = await fetch(
         "https://pokeapi.co/api/v2/pokemon?limit=20"
@@ -56,32 +54,45 @@ const HomePage = () => {
     } finally {
       setLoading(false);
     }
-  };
+     };
+    
+    fetchPokemons();
+  }, []);
+
+ 
 
   if (loading) return <h2>Loading...</h2>;
 
   return (
-    <div>
-      <h1>Pokemon List</h1>
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "repeat(4, 1fr)",
-          gap: "20px",
-        }}
-      >
+ <div className="max-w-7xl mx-auto px-4 py-10">
+      <h1 className="text-3xl md:text-4xl font-extrabold text-white drop-shadow mb-6">
+        Pokémon List
+      </h1>
+
+      <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 xl:grid-cols-5 gap-5">
         {pokemons.map((pokemon, index) => (
           <div
             key={pokemon.name}
-            style={{ border: "1px solid #ccc", padding: "10px" }}
+            className="group relative rounded-2xl border border-white/20 bg-white/10 backdrop-blur-sm p-4 shadow-md
+                       hover:shadow-2xl hover:border-yellow-300/60 transition-all duration-300"
           >
-            <img
-              src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${
-                index + 1
-              }.png`}
-              alt={pokemon.name}
-            />
-            <h3>{pokemon.name}</h3>
+            <div className="flex items-center justify-center">
+              <img
+                src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/${index + 1}.png`}
+                alt={pokemon.name}
+                className="h-24 w-24 object-contain drop-shadow
+                           transition-transform duration-300 group-hover:scale-110"
+              />
+            </div>
+
+            <h3 className="mt-3 text-center font-semibold text-white capitalize tracking-wide
+                           transition-colors duration-300 group-hover:text-yellow-300">
+              {pokemon.name}
+            </h3>
+
+            {/* glow ring on hover */}
+            <div className="pointer-events-none absolute inset-0 rounded-2xl ring-0
+                            transition-all duration-300 group-hover:ring-2 group-hover:ring-yellow-300/50" />
           </div>
         ))}
       </div>
