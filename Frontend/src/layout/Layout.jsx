@@ -1,6 +1,6 @@
 import Footer from "../components/Footer.jsx";
 import Header from "../components/Header.jsx";
-import { Outlet } from "react-router-dom";
+import { Outlet } from "react-router";
 import bgBody from "../img/BG_BODY.png";
 
 export default function Layout() {
