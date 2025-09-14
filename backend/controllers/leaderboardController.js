@@ -1,25 +1,39 @@
-import { Leaderboard } from "../models/leaderboard";
+import Leaderboard from "../models/leaderboard.js";
 
-export const getLeaderboard = async (_req, res) => {
+export const getLeaderboard = async (req, res, next) => {
   try {
-    const scores = await Leaderboard.find().limit10;
-    res.status(201).json(scores);
+    const limit = Number(req.query.limit ?? 10);
+    const scores = await Leaderboard.find()
+      .sort({ score: -1, date: 1 })
+      .limit(limit)
+      .lean();
+    res.status(200).json(scores);
   } catch (error) {
-    res.status(500).json("Server Error !");
+    next(error);
   }
 };
 
-export const addScore = async (_req, res) => {
+export const addScore = async (req, res, next) => {
   try {
     const { userName, score } = req.body;
-    if (!userName || score === undefined) {
-      return;
-      res.status(400).json({ message: "Bad Request try again" });
+
+    if (typeof userName !== "string" || userName.trim().length < 2) {
+      return res
+        .status(400)
+        .json({ message: "userName is required (min 2 chars)." });
     }
-    const newScore = new Leaderboard({ userName, score });
-    await newScore.save();
-    res.status(201).json(newScore);
+    if (typeof score !== "number" || Number.isNaN(score) || score < 0) {
+      return res
+        .status(400)
+        .json({ message: "score must be a non-negative number." });
+    }
+
+    const created = await Leaderboard.create({
+      userName: userName.trim(),
+      score,
+    });
+    res.status(201).json(created);
   } catch (error) {
-    res.status(500).json("Server Error !");
+    next(error);
   }
 };

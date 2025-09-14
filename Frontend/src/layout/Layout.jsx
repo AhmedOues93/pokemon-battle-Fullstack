@@ -1,9 +1,9 @@
-import Footer from "../components/Footer";
-import Header from "../components/Header";
-import { Outlet } from "react-router";
+import Footer from "../components/Footer.jsx";
+import Header from "../components/Header.jsx";
+import { Outlet } from "react-router-dom";
 import bgBody from "../img/BG_BODY.png";
 
-const Layout = () => {
+export default function Layout() {
   return (
     <div
       className="min-h-screen flex flex-col bg-cover bg-center bg-no-repeat"
@@ -16,7 +16,4 @@ const Layout = () => {
       <Footer />
     </div>
   );
-};
-
-export default Layout;
-
+}

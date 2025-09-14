@@ -1,13 +1,18 @@
 import mongoose from "mongoose";
 
 const connectDB = async () => {
+  const uri = process.env.MONGODB_URI;
+  if (!uri) {
+    console.error("MONGODB_URI is missing in .env");
+    process.exit(1);
+  }
   try {
-    const mongo = await mongoose.connect(process.env.MONGODB_URI, {
-      dbName: "Pokemons",
-    });
-    console.log(`Pokemon-Leaderboard Verbindung: ${mongo.connection.name}`);
+    const conn = await mongoose.connect(uri, { dbName: "Pokemons" });
+    console.log(
+      `Mongo connected: ${conn.connection.host}/${conn.connection.name}`
+    );
   } catch (error) {
-    console.log(error);
+    console.error("Mongo connection error:", error.message);
     process.exit(1);
   }
 };
