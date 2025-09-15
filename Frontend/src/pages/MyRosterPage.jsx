@@ -1,5 +1,5 @@
 import { useRoster } from "../hooks/useRoster.js";
-import { Link } from "react-router";
+import { Link } from "react-router-dom"; 
 
 export default function MyRosterPage() {
   const { roster, removeByName, clear } = useRoster();
@@ -10,13 +10,14 @@ export default function MyRosterPage() {
         <h1 className="text-3xl font-extrabold">My Roster</h1>
         {roster.length > 0 && (
           <button
-            className="px-3 py-2 rounded-xl bg-white/10 border border-white/20"
+            className="px-3 py-2 rounded-xl bg-green-400 text-black font-bold  hover:brightness-110"
             onClick={clear}
           >
             Clear
           </button>
         )}
       </div>
+
       {roster.length === 0 ? (
         <p>
           No Pokémon yet. Go pick some on the{" "}
@@ -28,10 +29,8 @@ export default function MyRosterPage() {
       ) : (
         <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4">
           {roster.map((p) => (
-            <div
-              key={p.name}
-              className="bg-white/10 border border-white/20 rounded-2xl p-4"
-            >
+            <div key={p.name} className="border bg-black/30 rounded-2xl p-4">
+            
               <Link to={`/details/${p.name}`} className="block text-center">
                 <img
                   src={p.sprite}
@@ -43,6 +42,8 @@ export default function MyRosterPage() {
                   {p.types.join(", ")}
                 </p>
               </Link>
+
+             
               <button
                 onClick={() => removeByName(p.name)}
                 className="mt-3 w-full px-3 py-2 rounded-xl bg-red-400 text-black font-bold"

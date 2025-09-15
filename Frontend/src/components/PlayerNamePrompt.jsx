@@ -10,6 +10,7 @@ export default function PlayerNamePrompt({ onSave }) {
       setError("Please enter at least 2 characters.");
       return;
     }
+    setError("");
     onSave(v);
   };
 
@@ -24,7 +25,13 @@ export default function PlayerNamePrompt({ onSave }) {
           className="flex-1 px-3 py-2 rounded-xl text-black"
           placeholder="Player name"
           value={name}
-          onChange={(e) => setName(e.target.value)}
+          onChange={(e) => {
+            setName(e.target.value);
+            if (error) setError("");
+          }}
+          onKeyDown={(e) => {
+            if (e.key === "Enter") handleSave();
+          }}
         />
         <button
           onClick={handleSave}

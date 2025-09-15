@@ -16,12 +16,12 @@ export function useRoster() {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(roster));
   }, [roster]);
 
-  const add = (pokemon) => {
-    setRoster((prev) => {
-      if (prev.some((p) => p.name === pokemon.name)) return prev; // no dupes
-      return [...prev, pokemon];
-    });
-  };
+ const add = (pokemon) => {
+   setRoster((prev) => {
+     if (prev.some((p) => p.name === pokemon.name)) return prev; 
+     return [...prev, pokemon].slice(0, 6); 
+   });
+ };
 
   const removeByName = (name) =>
     setRoster((prev) => prev.filter((p) => p.name !== name));

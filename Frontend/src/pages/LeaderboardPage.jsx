@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { API_URL } from "../lib/api.js";
+import { API_URL } from "../api/api.js";
 
 export default function LeaderboardPage() {
   const [rows, setRows] = useState([]);
@@ -29,8 +29,8 @@ export default function LeaderboardPage() {
     <div className="max-w-3xl mx-auto p-6 text-white">
       <h1 className="text-3xl font-extrabold mb-4">Leaderboard</h1>
       <div className="overflow-x-auto">
-        <table className="min-w-full bg-white/10 border border-white/20 rounded-xl overflow-hidden">
-          <thead className="bg-white/10">
+        <table className="min-w-full bg-black/30  border border-white/20 rounded-xl overflow-hidden">
+          <thead className="bg-green-400 text-black ">
             <tr>
               <th className="text-left px-4 py-2">#</th>
               <th className="text-left px-4 py-2">Player</th>
@@ -41,8 +41,8 @@ export default function LeaderboardPage() {
           <tbody>
             {rows.map((r, i) => (
               <tr key={r._id} className="odd:bg-white/5">
-                <td className="px-4 py-2">{i + 1}</td>
-                <td className="px-4 py-2">{r.userName}</td>
+                <td className=" px-4py-2">{i + 1}</td>
+                <td className="px-1   font-bold py-2">{r.userName}</td>
                 <td className="px-4 py-2 font-bold">{r.score}</td>
                 <td className="px-4 py-2">
                   {new Date(r.date || r.createdAt).toLocaleString()}
